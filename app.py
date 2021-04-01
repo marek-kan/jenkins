@@ -6,5 +6,12 @@ app = flask.Flask(__name__)
 def home():
     return 'Hello world!'
 
+def run_app():
+    app = flask.Flask(__name__)
+    app.run(port='9999')
+
+def get_app():
+    return app
+    
 if __name__ == '__main__':
-    app.run(port=9999)
+    run_app()
