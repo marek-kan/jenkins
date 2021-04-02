@@ -15,5 +15,20 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                sshPublisher(
+                  continueOnError: false, 
+                  failOnError: true,
+                  publishers: [
+                    sshPublisherDesc(
+                      configName: "AppServer",
+                      transfers: [sshTransfer(sourceFiles: 'app.py')],
+                      verbose: true
+                    )
+                  ]
+                )
+            }
+        }
     }
 }
