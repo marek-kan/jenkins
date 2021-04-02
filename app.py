@@ -4,7 +4,6 @@ app = flask.Flask(__name__)
 
 @app.route('/')
 def home():
-    print(a)
     return 'Hello world!'
 
 def run_app():
