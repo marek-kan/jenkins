@@ -23,7 +23,8 @@ pipeline {
                   publishers: [
                     sshPublisherDesc(
                       configName: "AppServer",
-                      transfers: [sshTransfer(sourceFiles: 'app.py')],
+                      transfers: [sshTransfer(sourceFiles: 'app.py'),
+                                  sshTransfer(sourceFiles: '../firstApp/**/*')],
                       verbose: true
                     )
                   ]
