@@ -25,7 +25,8 @@ pipeline {
                       configName: "AppServer",
                       transfers: [sshTransfer(sourceFiles: 'app.py'),
                                   sshTransfer(sourceFiles: 'Jenkinsfile'),
-                                  sshTransfer(sourceFiles: './test_dir/*')],
+                                  sshTransfer(sourceFiles: './test_dir/.gitkeep'),
+                                  sshTransfer(sourceFiles: './test_dir/subdir/.gitkeep')],
                       verbose: true
                     )
                   ]
