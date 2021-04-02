@@ -24,7 +24,8 @@ pipeline {
                     sshPublisherDesc(
                       configName: "AppServer",
                       transfers: [sshTransfer(sourceFiles: 'app.py'),
-                                  sshTransfer(sourceFiles: 'Jenkinsfile')],
+                                  sshTransfer(sourceFiles: 'Jenkinsfile'),
+                                  sshTransfer(sourceFiles: 'firstApp/**/*')],
                       verbose: true
                     )
                   ]
