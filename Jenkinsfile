@@ -27,7 +27,7 @@ pipeline {
                                   sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
-                                  sshTransfer(execCommand: 'echo test')]
+                                  sshTransfer(execCommand: 'echo test')],
                       verbose: true
                     )
                   ]
