@@ -38,23 +38,5 @@ pipeline {
                 )
             }
         }
-        stage('Start App') {
-            steps {
-                sshPublisher(
-                  continueOnError: false, 
-                  failOnError: true,
-                  publishers: [
-                    sshPublisherDesc(
-                      configName: "AppServer",
-                      transfers: [
-                                  sshTransfer(execCommand: '''docker exec -it flask_app /bin/bash
-                                                              gunicorn -b 0.0.0.0:8080 usr.test_deploy.wsgi:application''')
-                                  ],
-                      verbose: true
-                    )
-                  ]
-                )
-            }
-        }
     }
 }
