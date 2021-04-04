@@ -1,4 +1,4 @@
 from app import get_app
 
 application = get_app()
-app.run(port=8080)
+application.run(port=8080)
