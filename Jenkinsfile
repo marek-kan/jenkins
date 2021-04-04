@@ -27,7 +27,9 @@ pipeline {
                                   sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
-                                  sshTransfer(execCommand: 'echo test')],
+                                  sshTransfer(execCommand: 'docker stop flask_app || echo flask_app not running'),
+                                  sshTransfer(execCommand: 'docker rm flask_app || echo no flask_app container'),
+                                  sshTransfer(execCommand: 'docker rmi flask_app_image || echo no flask_app_image')],
                       verbose: true
                     )
                   ]
