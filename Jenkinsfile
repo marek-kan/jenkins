@@ -47,7 +47,8 @@ pipeline {
                   publishers: [
                     sshPublisherDesc(
                       configName: "AppServer",
-                      transfers: [sshTransfer(execCommand: 'sh -x /test_deploy/start_app.sh')],
+                      transfers: [sshTransfer(execCommand: 'pwd'),
+                                  sshTransfer(execCommand: 'sh -x /test_deploy/start_app.sh')],
                       verbose: true
                     )
                   ]
