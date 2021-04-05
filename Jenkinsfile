@@ -25,6 +25,7 @@ pipeline {
                       configName: "AppServer",
                       transfers: [sshTransfer(sourceFiles: 'app.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
+                                  sshTransfer(sourceFiles: '__init__.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'start_app.sh', remoteDirectory: 'test_deploy'),
