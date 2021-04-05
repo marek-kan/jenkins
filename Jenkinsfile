@@ -17,13 +17,16 @@ pipeline {
             }
         }
         stage('Deploy') {
-            if(${env.GIT_BRANCH}=='master') {
-                def serverName = 'AppServer'
-            }
-            if(${env.GIT_BRANCH}=='dev') {
-                def serverName = 'AppServerDev'
-            } else {
-                def serverName = 'Unknown'
+            script {
+                if(${env.GIT_BRANCH}=='master') {
+                    def serverName = 'AppServer'
+                }
+                if(${env.GIT_BRANCH}=='dev') {
+                    def serverName = 'AppServerDev'
+                } else {
+                    def serverName = 'Unknown'
+                }
+                sh '${serverName}'
             }
             steps {
                 sshPublisher(
