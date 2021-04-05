@@ -30,6 +30,9 @@ pipeline {
                         env.serverName = 'Unknown'
                     }
                 }
+                
+                sh 'echo "${env.serverName}"'
+                
                 sshPublisher(
                   continueOnError: false, 
                   failOnError: true,
