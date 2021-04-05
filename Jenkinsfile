@@ -43,8 +43,7 @@ pipeline {
                             )
                           ]
                         )
-                    }
-                    if(env.GIT_BRANCH=='origin/dev') {
+                    }else if(env.GIT_BRANCH=='origin/dev') {
                         sshPublisher(
                           continueOnError: false, 
                           failOnError: true,
@@ -89,8 +88,7 @@ pipeline {
                             )
                           ]
                         )
-                    }
-                    if(env.GIT_BRANCH=='origin/dev') {
+                    }else if(env.GIT_BRANCH=='origin/dev') {
                         sshPublisher(
                           continueOnError: false, 
                           failOnError: true,
