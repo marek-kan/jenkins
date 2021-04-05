@@ -6,6 +6,7 @@ pipeline {
         stage('Hello') {
             steps {
                 sh 'echo "Hello World"'
+                sh 'printenv'
             }
         }
         stage('Testing Flask') {
