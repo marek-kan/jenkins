@@ -20,13 +20,13 @@ pipeline {
             steps {
                 script {
                     if(env.GIT_BRANCH=='master') {
-                        sh "export SERVER_NAME AppServer"
+                        env.serverName = 'AppServer'
                     }
                     if(env.GIT_BRANCH=='dev') {
-                         sh "export SERVER_NAME AppServerDev"
+                        def serverName = 'AppServerDev'
                     } else {
-                        sh 'echo "$env.GIT_BRANCH"'
-                         sh "export SERVER_NAME Unknown"
+                        sh 'echo "${env.GIT_BRANCH}"'
+                        env.serverName = 'Unknown'
                     }
                 }
                 sshPublisher(
@@ -34,7 +34,7 @@ pipeline {
                   failOnError: true,
                   publishers: [
                     sshPublisherDesc(
-                      configName: "${env.SERVER_NAME}",
+                      configName: "${env.serverName}",
                       transfers: [sshTransfer(sourceFiles: 'app.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: '__init__.py', remoteDirectory: 'test_deploy'),
@@ -59,7 +59,7 @@ pipeline {
                   failOnError: true,
                   publishers: [
                     sshPublisherDesc(
-                      configName: "${env.SERVER_NAME}",
+                      configName: "${env.serverName}",
                       transfers: [sshTransfer(execCommand: 'pwd'),
                                   sshTransfer(execCommand: 'sh -x ./test_deploy/start_app.sh')],
                       verbose: true
