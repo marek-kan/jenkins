@@ -1,5 +1,7 @@
 pipeline {
-    
+    environment {
+        serverName = "Unknown"
+    }
     agent any
 
     stages {
@@ -7,12 +9,12 @@ pipeline {
             steps {
                 script {
                     if(env.GIT_BRANCH=='origin/master') {
-                        def serverName = 'AppServer'
+                        env.serverName = "AppServer"
                     }
                     if(env.GIT_BRANCH=='origin/dev') {
-                        def serverName = 'AppServerDev'
+                        env.serverName = "AppServerDev"
                     } else {
-                       def serverName = 'Unknown'
+                       env.serverName = "Unknown"
                     }
                     sh "echo ${serverName}"
                 }
