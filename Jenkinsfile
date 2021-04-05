@@ -9,12 +9,18 @@ pipeline {
             steps {
                 script {
                     if(env.GIT_BRANCH=='origin/master') {
+                        sh "echo IN MASTER IF"
                         env.serverName = "AppServer"
+                        sh "echo ${serverName}"
                     }
                     if(env.GIT_BRANCH=='origin/dev') {
+                        sh "echo IN DEV IF"
                         env.serverName = "AppServerDev"
+                        sh "echo ${serverName}"
                     } else {
+                       sh "echo IN ELSE IF"
                        env.serverName = "Unknown"
+                       sh "echo ${serverName}"
                     }
                     sh "echo ${serverName}"
                 }
