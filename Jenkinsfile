@@ -2,14 +2,12 @@ pipeline {
     
     agent any
 
-    node {
+    stages {
         stage('Hello') {
             steps {
                 sh 'echo "Hello World"'
             }
         }
-    }
-    node {
         stage('Testing Flask') {
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
@@ -18,8 +16,6 @@ pipeline {
                 }
             }
         }
-    }
-    node {
         stage('Deploy') {
             if(${env.GIT_BRANCH}=='master') {
                 def serverName = 'AppServer'
@@ -53,8 +49,6 @@ pipeline {
                 )
             }
         }
-    }
-    node {
         stage('Start App') {
             steps {
                 sshPublisher(
