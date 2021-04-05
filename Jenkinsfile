@@ -27,14 +27,13 @@ pipeline {
                     } else {
                         def serverName = 'Unknown'
                     }
-                    sh '${serverName}'
                 }
                 sshPublisher(
                   continueOnError: false, 
                   failOnError: true,
                   publishers: [
                     sshPublisherDesc(
-                      configName: ${serverName},
+                      configName: "${serverName}",
                       transfers: [sshTransfer(sourceFiles: 'app.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
                                   sshTransfer(sourceFiles: '__init__.py', remoteDirectory: 'test_deploy'),
@@ -59,7 +58,7 @@ pipeline {
                   failOnError: true,
                   publishers: [
                     sshPublisherDesc(
-                      configName: ${serverName},
+                      configName: "${serverName}",
                       transfers: [sshTransfer(execCommand: 'pwd'),
                                   sshTransfer(execCommand: 'sh -x ./test_deploy/start_app.sh')],
                       verbose: true
