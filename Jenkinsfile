@@ -39,7 +39,7 @@ pipeline {
                 )
             }
         }
-        tage('Start App') {
+        stage('Start App') {
             steps {
                 sshPublisher(
                   continueOnError: false, 
