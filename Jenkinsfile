@@ -31,7 +31,7 @@ pipeline {
                     }
                 }
                 
-                sh 'echo "${env.serverName}"'
+                sh 'printenv'
                 
                 sshPublisher(
                   continueOnError: false, 
