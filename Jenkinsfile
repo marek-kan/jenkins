@@ -1,5 +1,5 @@
 pipeline {
-    enviroment {
+    environment {
         if(env.GIT_BRANCH=='master'){
             def serverName = 'AppServer'
         }
