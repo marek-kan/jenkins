@@ -25,6 +25,7 @@ pipeline {
                     if(env.GIT_BRANCH=='dev') {
                         def serverName = 'AppServerDev'
                     } else {
+                        sh 'echo "${env.GIT_BRANCH}"'
                         env.serverName = 'Unknown'
                     }
                 }
