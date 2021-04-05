@@ -34,6 +34,7 @@ pipeline {
                                           sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
                                           sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
                                           sshTransfer(sourceFiles: 'start_app.sh', remoteDirectory: 'test_deploy'),
+                                          sshTransfer(sourceFiles: 'deploy.sh', remoteDirectory: 'test_deploy'),
                                           sshTransfer(execCommand: 'sh -x ./test_deploy/deploy.sh')],
                               verbose: true
                             )
@@ -52,6 +53,7 @@ pipeline {
                                           sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
                                           sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
                                           sshTransfer(sourceFiles: 'start_app.sh', remoteDirectory: 'test_deploy'),
+                                          sshTransfer(sourceFiles: 'deploy.sh', remoteDirectory: 'test_deploy'),
                                           sshTransfer(execCommand: 'sh -x ./test_deploy/deploy.sh')],
                               verbose: true
                             )
