@@ -20,13 +20,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    if(env.GIT_BRANCH=='master') {
+                    if(env.GIT_BRANCH=='origin/master') {
                         env.serverName = 'AppServer'
                     }
-                    if(env.GIT_BRANCH=='dev') {
+                    if(env.GIT_BRANCH=='origin/dev') {
                         def serverName = 'AppServerDev'
                     } else {
-                        sh 'echo "${env.GIT_BRANCH}"'
+                        sh 'echo "$env.GIT_BRANCH"'
                         env.serverName = 'Unknown'
                     }
                 }
