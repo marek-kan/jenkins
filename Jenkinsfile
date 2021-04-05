@@ -14,9 +14,9 @@ pipeline {
                     } else {
                        def serverName = 'Unknown'
                     }
-                    sh 'echo ${serverName}'
+                    sh "echo ${serverName}"
                 }
-                sh "echo ${serverName}"
+                
                 sh "echo ${env.GIT_BRANCH}"
                 sh 'echo "Hello World"'
                 sh 'printenv'
