@@ -5,6 +5,19 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
+                script {
+                    if(env.GIT_BRANCH=='origin/master') {
+                        def serverName = 'AppServer'
+                    }
+                    if(env.GIT_BRANCH=='origin/dev') {
+                        def serverName = 'AppServerDev'
+                    } else {
+                        sh 'echo "$env.GIT_BRANCH"'
+                        def serverName = 'Unknown'
+                    }
+                    sh 'echo ${serverName}'
+                }
+                sh 'echo ${serverName}'
                 sh 'echo "Hello World"'
                 sh 'printenv'
             }
