@@ -12,12 +12,12 @@ pipeline {
                     if(env.GIT_BRANCH=='origin/dev') {
                         def serverName = 'AppServerDev'
                     } else {
-                        sh 'echo "$env.GIT_BRANCH"'
-                        def serverName = 'Unknown'
+                       def serverName = 'Unknown'
                     }
                     sh 'echo ${serverName}'
                 }
                 sh 'echo ${serverName}'
+                sh 'echo ${env.GIT_BRANCH}'
                 sh 'echo "Hello World"'
                 sh 'printenv'
             }
