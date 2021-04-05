@@ -1,21 +1,21 @@
 pipeline {
+    enviroment {
+        if(env.GIT_BRANCH=='master'){
+            def serverName = 'AppServer'
+        }
+        if(env.GIT_BRANCH=='dev'){
+            def serverName = 'AppServerDev'
+        }
+        else{
+            def serverName = 'Unknown'
+        }
+    }
     agent any
 
     stages {
         stage('Hello') {
             steps {
                 sh 'echo "Hello World"'
-            }
-        }
-        stage('Deciding env') {
-            if(env.GIT_BRANCH=='master'){
-                def serverName = 'AppServer'
-            }
-            if(env.GIT_BRANCH=='dev'){
-                def serverName = 'AppServerDev'
-            }
-            else{
-                def serverName = 'Unknown'
             }
         }
         stage('Testing Flask') {
