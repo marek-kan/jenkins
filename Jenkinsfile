@@ -7,7 +7,7 @@ pipeline {
                 sh 'echo "Hello World"'
             }
         }
-        stage('Installing Flask') {
+        stage('Testing Flask') {
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
                     sh 'pip3 install --user flask'
@@ -48,7 +48,7 @@ pipeline {
                     sshPublisherDesc(
                       configName: "AppServer",
                       transfers: [sshTransfer(execCommand: 'pwd'),
-                                  sshTransfer(execCommand: 'sh -x /test_deploy/start_app.sh')],
+                                  sshTransfer(execCommand: 'sh -x ./test_deploy/start_app.sh')],
                       verbose: true
                     )
                   ]
