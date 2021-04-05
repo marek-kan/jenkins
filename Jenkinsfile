@@ -15,7 +15,7 @@ pipeline {
                     }
                     if(env.GIT_BRANCH=='origin/dev') {
                         sh "echo IN DEV IF"
-                        env.serverName = "AppServerDev"
+                        sh "export serverName AppServerDev"
                         sh "echo ${serverName}"
                     } else {
                        sh "echo IN ELSE IF"
