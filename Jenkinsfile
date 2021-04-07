@@ -1,3 +1,34 @@
+void deployToServer(def serverName) {
+     sshPublisher(
+        continueOnError: false, 
+        failOnError: true,
+        publishers: [
+        sshPublisherDesc(
+          configName: "${serverName}",
+          transfers: [sshTransfer(sourceFiles: 'app.py', remoteDirectory: 'test_deploy'),
+                      sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
+                      sshTransfer(sourceFiles: '__init__.py', remoteDirectory: 'test_deploy'),
+                      sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
+                      sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
+                      sshTransfer(sourceFiles: 'start_app.sh', remoteDirectory: 'test_deploy'),
+                      sshTransfer(sourceFiles: 'deploy.sh', remoteDirectory: 'test_deploy'),
+                      sshTransfer(execCommand: 'sh -x ./test_deploy/deploy.sh')],
+          verbose: true)]
+     )
+}
+
+void startApp(def serverName) {
+    sshPublisher(
+        continueOnError: false, 
+        failOnError: true,
+        publishers: [
+        sshPublisherDesc(
+          configName: "${serverName}",
+          transfers: [sshTransfer(execCommand: 'sh -x ./test_deploy/start_app.sh')],
+          verbose: true)]
+    )
+}
+
 pipeline {
     
     agent any
@@ -22,43 +53,9 @@ pipeline {
             steps {
                 script {
                     if(env.GIT_BRANCH=='origin/master') {
-                        sshPublisher(
-                          continueOnError: false, 
-                          failOnError: true,
-                          publishers: [
-                            sshPublisherDesc(
-                              configName: "AppServer",
-                              transfers: [sshTransfer(sourceFiles: 'app.py', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: '__init__.py', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'start_app.sh', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'deploy.sh', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(execCommand: 'sh -x ./test_deploy/deploy.sh')],
-                              verbose: true
-                            )
-                          ]
-                        )
+                        deployToServer('AppServer')
                     }else if(env.GIT_BRANCH=='origin/dev') {
-                        sshPublisher(
-                          continueOnError: false, 
-                          failOnError: true,
-                          publishers: [
-                            sshPublisherDesc(
-                              configName: "AppServerDev",
-                              transfers: [sshTransfer(sourceFiles: 'app.py', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'wsgi.py', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: '__init__.py', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'Dockerfile', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'test_dir/**/*', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'start_app.sh', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(sourceFiles: 'deploy.sh', remoteDirectory: 'test_deploy'),
-                                          sshTransfer(execCommand: 'sh -x ./test_deploy/deploy.sh')],
-                              verbose: true
-                            )
-                          ]
-                        )
+                        deployToServer('AppServerDev')
                     } else {
                         sh 'echo "$env.GIT_BRANCH"'
                         sh "exit 125"
@@ -70,29 +67,9 @@ pipeline {
             steps {
                 script {
                     if(env.GIT_BRANCH=='origin/master') {
-                        sshPublisher(
-                          continueOnError: false, 
-                          failOnError: true,
-                          publishers: [
-                            sshPublisherDesc(
-                              configName: "AppServer",
-                              transfers: [sshTransfer(execCommand: 'sh -x ./test_deploy/start_app.sh')],
-                              verbose: true
-                            )
-                          ]
-                        )
+                        startApp('AppServer')
                     }else if(env.GIT_BRANCH=='origin/dev') {
-                        sshPublisher(
-                          continueOnError: false, 
-                          failOnError: true,
-                          publishers: [
-                            sshPublisherDesc(
-                              configName: "AppServerDev",
-                              transfers: [sshTransfer(execCommand: 'sh -x ./test_deploy/start_app.sh')],
-                              verbose: true
-                            )
-                          ]
-                        )
+                        startApp('AppServerDev')
                     } else {
                         sh 'echo "$env.GIT_BRANCH"'
                         sh "exit 125"
